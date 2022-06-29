@@ -15,7 +15,14 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        var env = Environment.OSVersion;
+        var data = new WebEnv
+        {
+            Name = env.ToString(),
+            OsVersion = env.VersionString,
+            Os = Enum.GetName (env.Platform)
+        };
+        return View(data);
     }
 
     public IActionResult Privacy()
@@ -29,4 +36,10 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+}
+public class WebEnv
+{
+    public string? Os { get; set; }
+    public string OsVersion { get;set;}
+    public string Name { get;set;}
 }
